@@ -25,7 +25,7 @@ angular.module('userService', [])
   };
 
   //delete a user
-  userFactory.delete = factory(id){
+  userFactory.delete = function(id){
     return $http.delete('/api/users' + id);
   };
 

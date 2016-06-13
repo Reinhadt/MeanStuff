@@ -10,7 +10,7 @@ angular.module('authService', [])
 
   //get the token out of local storage
   authTokenFactory.getToken = function(){
-    return $window.localstorage.getItem('token');
+    return $window.localStorage.getItem('token');
   };
 
   //function to set token or clear token
@@ -27,7 +27,7 @@ angular.module('authService', [])
 
   return authTokenFactory;
 
-});
+})
 
 //=============================================================================
 // auth factory to login and get information
@@ -48,10 +48,10 @@ angular.module('authService', [])
       username: username,
       password: password
     })
-      .success(function(data){
+    .success(function(data){
         AuthToken.setToken(data.token);
         return data;
-      })
+      });
   };
 
   //log a user out by clearing the token
@@ -74,7 +74,7 @@ angular.module('authService', [])
   //get the logged user
   authFactory.getUser = function(){
     if(AuthToken.getToken()){
-      return $http.get('/api/me');
+      return $http.get('/api/me', { cache: true });
     }
     else{
       return $q.reject({ message: 'User has no token' });
@@ -83,7 +83,7 @@ angular.module('authService', [])
 
   return authFactory;
 
-});
+})
 
 //=============================================================================
 // application configuration to integrate token into requests
@@ -96,7 +96,7 @@ angular.module('authService', [])
   interceptorFactory.request = function(config){
 
     //grab the token
-    var token = AuthToken.getToken():
+    var token = AuthToken.getToken();
 
     if(token){
       config.headers['x-access-token'] = token;
@@ -106,7 +106,7 @@ angular.module('authService', [])
   };
 
   //happens on response errors
-  interceptorFactory.responseError = funnction(response){
+  interceptorFactory.responseError = function(response){
 
     //if our server returns a 403 forbidden response
     if(response.status == 403){
