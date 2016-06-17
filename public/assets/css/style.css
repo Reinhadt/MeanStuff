@@ -15,6 +15,13 @@ main          {
   -moz-animation:spin 1s infinite;
 }
 
+/* show and hide */
+.show-hide-message.ng-hide-remove{
+  -webkit-animation:zoomIn 0.3s both ease;
+  -moz-animation:zoomIn 0.3s both ease;
+  animation:zoomIn 0.3s both ease;
+}
+
 @keyframes spin{
   from { transform: rotate(0deg) }
   to{ transform: rotate(360deg) }
